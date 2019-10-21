@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title></title>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="static/football_app/css/style.css">
+</head>
+<body style="padding-top: 40px; padding-bottom: 40px;">
+    <div class="fluid-container">
+        <form class="form-signin" style="padding: 15px; margin: 0 auto; width: 100%; max-width: 420px;" action="#" method="POST">
+            {% csrf_token %}
+            <div class="text-center mb-4">
+                <img class="mb-4" src="static/football_app/images/choi.jpg" alt="image" width="200" height="200">
+                <h1>Dojo Football</h1>
+                <p>Welcome to the Dojo Football website! Please login below.  If you do not have an account, click the "Sign Up" link.</p>
+            </div>
+            <div class="form-label-group">
+                <input style="padding: 10px" class="form-control" type="email" name="email" placeholder="Email address">
+            
+            </div>
+
+
+            <div class="form-label-group">
+                <input style="margin-top: 10px;" class="form-control" type="password" name="password" placeholder="Password">
+            </div>
+            <button style="margin-top: 10px;" class="btn btn-primary btn-lg btn-block" type="submit">Sign In</button>
+    
+        </form>
+        <div class="text-center">
+            <a href="/registerpage">Don't have an account? Sign up here!</a>
+        </div>
+    </div>
+</body>
+</html>
