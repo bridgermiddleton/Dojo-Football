@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 import bcrypt
+from .models import User
 
 def loginpage(request):
     return render(request, "football_app/loginpage.html")
