@@ -7,6 +7,4 @@ urlpatterns = [
     url(r'^login$', views.login),
     url(r'^register$', views.register),
     url(r'^teamHome$', views.teamHome),
-    url(r'^draft$', views.draft)
-
 ]
