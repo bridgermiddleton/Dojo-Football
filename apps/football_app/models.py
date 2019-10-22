@@ -52,7 +52,7 @@ class Player(models.Model):
     rushing_tds = models.IntegerField()
     receiving_tds = models.IntegerField()
     receptions = models.IntegerField()
-    user = models.ForeignKey(User, related_name="players")
+    user = models.ForeignKey(User, related_name="players", on_delete="CASCADE")
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -68,7 +68,7 @@ class TWeek(models.Model):
     WR3_score = models.DecimalField(max_digits=5, decimal_places=2)
     TE_score = models.DecimalField(max_digits=5, decimal_places=2)
     record = models.CharField(max_length=30)
-    user = models.ForeignKey(User, related_name="weeks")
+    user = models.ForeignKey(User, related_name="weeks", on_delete="CASCADE")
     
 
 # Create your models here.

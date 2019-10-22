@@ -29,4 +29,6 @@ def logout(request):
    if 'userid' in request.session:
        del request.session['userid']
    return redirect("/")
-# Create your views here.
+
+def home(request):
+    return render(request, "football_app/user_home.html")
