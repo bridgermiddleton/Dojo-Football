@@ -75,3 +75,9 @@ def draftplayer(request):
     print(newPlayer)
     return redirect("/draftpage")
 
+def reset(request):
+    for user in User.objects.all():
+        for player in user.players.all():
+            player.delete()
+    return redirect("/draftpage")
+

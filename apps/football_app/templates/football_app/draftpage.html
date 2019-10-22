@@ -15,6 +15,10 @@
         <div class="jumbotron text-center">
             <h1 class="display-4">Welcome to the Draft</h1>
             <p class="lead">Your Starting Lineup Needs: 1 QB, 2 RBs, 3WRs, and 1 TE. Good Luck and Enjoy!</p>
+            <form action="/reset" method="POST">
+                {% csrf_token %}
+                <input class="btn btn-danger" type="submit" value="Reset">
+            </form>
         </div>
         <div class="row">
             <div class="col">
