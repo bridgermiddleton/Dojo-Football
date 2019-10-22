@@ -26,6 +26,12 @@ def register(request):
     request.session['userid'] = user.id
     pass
 
+def teamHome(request):
+    return render(request, "football_app/teamHome.html")
+
+def draft(request):
+    return render(request, "football_app/draft.html")
+
 def logout(request):
    if 'userid' in request.session:
        del request.session['userid']
