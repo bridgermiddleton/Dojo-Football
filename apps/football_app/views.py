@@ -34,12 +34,17 @@ def logout(request):
    if 'userid' in request.session:
        del request.session['userid']
    return redirect("/")
-# Create your views here.
+
+
 def teamHome(request):
     current_user = User.objects.get(id=request.session["userid"])
+    roster = current_user.players.all() #list of player objects
+    for p in roster:
+        p.total_points = score(p.gsis_id, week=2)
+
     context = {
         "user": current_user,
-        "player_stats": test()
+        "roster": roster
     }
     return render(request, "football_app/teamHome.html", context)
 

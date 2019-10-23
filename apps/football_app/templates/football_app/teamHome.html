@@ -51,43 +51,43 @@
                   </tr>
                 </thead>
                 <tbody>
-                  {% for p in user.players.all %}
+                  {% for p in roster %}
                   {% if p.position == "QB" %}
                   <tr>
                     <th scope="row">{{p.position}}</th>
                     <td>{{p.first_name}} {{p.last_name}}</td>
                     <td>Opponent we dont have this in Player class</td>
-                    <td>{{player_stats}}</td>
+                    <td>{{p.total_points}}</td>
                   </tr>
                   {% endif %}
                   {% endfor %}
-                  {% for p in user.players.all %}
+                  {% for p in roster %}
                   {% if p.position == "RB" %}
                   <tr>
                     <th scope="row">{{p.position}}</th>
                     <td>{{p.first_name}} {{p.last_name}}</td>
                     <td>Opponent we dont have this in Player class</td>
-                    <td>score week</td>
+                    <td>{{p.total_points}}</td>
                   </tr>
                   {% endif %}
                   {% endfor %}
-                  {% for p in user.players.all %}
+                  {% for p in roster %}
                   {% if p.position == "WR" %}
                   <tr>
                     <th scope="row">{{p.position}}</th>
                     <td>{{p.first_name}} {{p.last_name}}</td>
                     <td>Opponent we dont have this in Player class</td>
-                    <td>score week</td>
+                    <td>{{p.total_points}}</td>
                   </tr>
                   {% endif %}
                   {% endfor %}
-                  {% for p in user.players.all %}
+                  {% for p in roster %}
                   {% if p.position == "TE" %}
                   <tr>
                     <th scope="row">{{p.position}}</th>
                     <td>{{p.first_name}} {{p.last_name}}</td>
                     <td>Opponent we dont have this in Player class</td>
-                    <td>score week</td>
+                    <td>{{p.total_points}}</td>
                   </tr>
                   {% endif %}
                   {% endfor %}
