@@ -39,7 +39,13 @@ def filterStatus(theplayer):
         return False
 
 def home(request):
-    return render(request, "football_app/user_home.html")
+    teams = User.objects.order_by("W")
+    context = {
+        'teams' : teams,
+        'length' : range(1,len(teams)+1),
+        'superlength' : len(teams),
+    }
+    return render(request, "football_app/user_home.html", context)
 def draftpage(request):
     if 'userid' in request.session:
 

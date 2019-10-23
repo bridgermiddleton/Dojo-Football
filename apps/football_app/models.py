@@ -44,9 +44,9 @@ class Player(models.Model):
     last_name = models.CharField(max_length=255)
     gsis_id = models.CharField(max_length=200)
     position = models.CharField(max_length=3)
-    total_points = models.IntegerField()
-    passing_yards = models.IntegerField()
+    total_points = models.DecimalField(max_digits=5, decimal_places=2)
     rushing_yards = models.IntegerField()
+    passing_yards = models.IntegerField()
     receiving_yards = models.IntegerField()
     passing_tds = models.IntegerField()
     rushing_tds = models.IntegerField()
@@ -71,4 +71,13 @@ class TWeek(models.Model):
     user = models.ForeignKey(User, related_name="weeks", on_delete="CASCADE")
     
 
-# Create your models here.
+class PWeek(models.Model):
+    points = models.DecimalField(max_digits=5, decimal_places=2)
+    passing_yards = models.IntegerField()
+    rushing_yards = models.IntegerField()
+    receiving_yards = models.IntegerField()
+    passing_tds = models.IntegerField()
+    rushing_tds = models.IntegerField()
+    receiving_tds = models.IntegerField()
+    receptions = models.IntegerField()
+    player = models.ForeignKey(Player, related_name="weeks", on_delete="CASCADE")
