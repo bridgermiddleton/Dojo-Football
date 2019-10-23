@@ -34,7 +34,7 @@
         </nav>
         <div class="container">
             <h2>Matchup:</h2>
-            <h4>Your Team Name:</h4>
+            <h4>{{user.team_name}}:</h4>
             <p>Score</p>
             <h4>Opponent Team Name:</h4>
             <p>Score</p>
@@ -51,24 +51,46 @@
                   </tr>
                 </thead>
                 <tbody>
+                  {% for p in user_players %}
+                  {% if p.position == "QB" %}
                   <tr>
-                    <th scope="row">QB</th>
-                    <td>Kyler Murray</td>
-                    <td>NO</td>
-                    <td>20.0</td>
+                    <th scope="row">{{p.position}}</th>
+                    <td>{{p.first_name}} {{p.last_name}}</td>
+                    <td>Opponent we dont have this in Player class</td>
+                    <td>score week</td>
                   </tr>
+                  {% endif %}
+                  {% endfor %}
+                  {% for p in user_players %}
+                  {% if p.position == "RB" %}
                   <tr>
-                    <th scope="row">RB1</th>
-                    <td>Nick Chubb</td>
-                    <td>NE</td>
-                    <td>15.6</td>
+                    <th scope="row">{{p.position}}</th>
+                    <td>{{p.first_name}} {{p.last_name}}</td>
+                    <td>Opponent we dont have this in Player class</td>
+                    <td>score week</td>
                   </tr>
+                  {% endif %}
+                  {% endfor %}
+                  {% for p in user_players %}
+                  {% if p.position == "WR" %}
                   <tr>
-                    <th scope="row">RB2</th>
-                    <td>Todd Gurley</td>
-                    <td>@ATL</td>
-                    <td>14.4</td>
+                    <th scope="row">{{p.position}}</th>
+                    <td>{{p.first_name}} {{p.last_name}}</td>
+                    <td>Opponent we dont have this in Player class</td>
+                    <td>score week</td>
                   </tr>
+                  {% endif %}
+                  {% endfor %}
+                  {% for p in user_players %}
+                  {% if p.position == "TE" %}
+                  <tr>
+                    <th scope="row">{{p.position}}</th>
+                    <td>{{p.first_name}} {{p.last_name}}</td>
+                    <td>Opponent we dont have this in Player class</td>
+                    <td>score week</td>
+                  </tr>
+                  {% endif %}
+                  {% endfor %}
                 </tbody>
               </table>
               <table class="table table-striped">

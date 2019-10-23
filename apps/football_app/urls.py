@@ -9,5 +9,4 @@ urlpatterns = [
     url(r'^draftpage$', views.draftpage),
     url(r'^draftplayer$', views.draftplayer),
     url(r'^teamHome$', views.teamHome)
-
 ]

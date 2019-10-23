@@ -35,7 +35,12 @@ def logout(request):
    return redirect("/")
 # Create your views here.
 def teamHome(request):
-    return render(request, "football_app/teamHome.html")
+    current_user = User.objects.get(id=request.session["userid"])
+    context = {
+        "user": current_user,
+        "user_players": Player.objects.filter(user=current_user)
+    }
+    return render(request, "football_app/teamHome.html", context)
 
 def filterStatus(theplayer):
     if theplayer.status == "ACT":
