@@ -11,7 +11,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
 </head>
 <body>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
                 <a class="navbar-brand" href="#">Dojo Football</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                   <span class="navbar-toggler-icon"></span>
@@ -36,37 +36,23 @@
                   </ul>
                 </div>
               </nav>
+              <div class="container">
+              <div class="jumbotron text-center">
+                  <h1 class="display-4">{{player.first_name}} {{player.last_name}}</h1>
+                  <h4>{{player.position}}</h4>
+                  <p class="lead">Fantasy Team: {{player.user.team_name}}</p>
+                  <ul class="list-group">
+                      <li class="list-group-item">Passing Yards: {{player.passing_yards}}</li>
+                      <li class="list-group-item">Rushing Yards: {{player.rushing_yards}}</li>
+                      <li class="list-group-item">Receiving Yards: {{player.receiving_yards}}</li>
+                      <li class="list-group-item">Passing Touchdowns: {{player.passing_tds}}</li>
+                      <li class="list-group-item">Rushing Touchdowns: {{player.rushing_tds}}</li>
+                      <li class="list-group-item">Receiving Touchdowns: {{player.receiving_tds}}</li>
+                      <li class="list-group-item">Receptions: {{player.receptions}}</li>
 
-    <div class="jumbotron text-center">
-        <h1 class="display-4">Welcome, {{user.first_name}}</h1>
-        <p class="lead">This is your main team page. Below is your roster.</p>
+                  </ul>
+          </div>
     </div>
-    <div class="container">
-        <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <th>Position</th>
-                    <th>Players</th>
-
-                </tr>
-            </thead>
-            <tbody>
-                {% for player in user.players.all %}
-                <tr>
-                    <td>{{player.position}}</td>
-                    <td>
-                        <form action="/getplayerstats/{{player.id}}" method="POST">
-                            {% csrf_token %}
-                            <input class="btn btn-link" type="submit" value="{{player.first_name}} {{player.last_name}}">
-                        </form>
-                    </td>
-                </tr>
-                {% endfor %}
-
-            </tbody>
-        </table>
-
-
-    </div>
+ 
 </body>
 </html>

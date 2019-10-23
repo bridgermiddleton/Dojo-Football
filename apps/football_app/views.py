@@ -81,3 +81,48 @@ def reset(request):
             player.delete()
     return redirect("/draftpage")
 
+def userteamhome(request):
+    context = {
+        "user": User.objects.get(id=request.session['userid']),
+        "week": 7
+    }
+    return render(request, "football_app/userteamhome.html", context)
+
+
+def individualplayerpage(request, playerid):
+    context = {
+        "player": Player.objects.get(id=playerid),
+    }
+    return render(request, "football_app/individualplayerpage.html", context)
+
+
+def getplayerstats(request, playerid):
+    theplayer = Player.objects.get(id=playerid)
+    for key in nflgame.players:
+        if nflgame.players[key].gsis_id == theplayer.gsis_id:
+            stats = nflgame.players[key].stats(2019, week=7).stats
+            if 'passing_yds' in stats:
+                 theplayer.passing_yards = stats['passing_yds']
+                 theplayer.save()
+            if 'rushing_yds' in stats:
+                theplayer.rushing_yards = stats['rushing_yds']
+                theplayer.save()
+            if 'receiving_yds' in stats:
+                theplayer.receiving_yards = stats['receiving_yds']
+                theplayer.save()
+            if 'passing_tds' in stats:
+                theplayer.passing_tds = stats['passing_tds']
+                theplayer.save()
+            if 'rushing_tds' in stats:
+                theplayer.rushing_tds = stats['rushing_tds']
+                theplayer.save()
+            if 'receiving_tds' in stats:
+                theplayer.rushing_tds = stats['receiving_tds']
+                theplayer.save()
+            if 'receiving_rec' in stats:
+                theplayer.receptions = stats['receiving_rec']
+                theplayer.save()
+    
+        
+    
+    return redirect(f"/individualplayerpage/{playerid}")
