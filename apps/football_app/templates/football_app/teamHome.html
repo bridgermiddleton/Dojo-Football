@@ -24,7 +24,7 @@
               <li class="nav-item active">
                 <a class="nav-link" href="#">Matchup</a>
               <li class="nav-item">
-                <a class="nav-link disabled" href="#">Draft</a>
+                <a class="nav-link" href="/draftpage">Draft</a>
               </li>
               <li class="nav-item">
               <u><a href="/logout" class="nav-link text-primary">Log Out</a></u>
@@ -40,7 +40,7 @@
             <p>Score</p>
         </div>
         <div class="container">
-          <h2>Team Name Roster:</h2>
+          <h2>{{user.team_name}} Roster:</h2>
             <table class="table table-striped">
                 <thead class="bg-dark text-light">
                   <tr>
@@ -51,17 +51,17 @@
                   </tr>
                 </thead>
                 <tbody>
-                  {% for p in user_players %}
+                  {% for p in user.players.all %}
                   {% if p.position == "QB" %}
                   <tr>
                     <th scope="row">{{p.position}}</th>
                     <td>{{p.first_name}} {{p.last_name}}</td>
                     <td>Opponent we dont have this in Player class</td>
-                    <td>score week</td>
+                    <td>{{player_stats}}</td>
                   </tr>
                   {% endif %}
                   {% endfor %}
-                  {% for p in user_players %}
+                  {% for p in user.players.all %}
                   {% if p.position == "RB" %}
                   <tr>
                     <th scope="row">{{p.position}}</th>
@@ -71,7 +71,7 @@
                   </tr>
                   {% endif %}
                   {% endfor %}
-                  {% for p in user_players %}
+                  {% for p in user.players.all %}
                   {% if p.position == "WR" %}
                   <tr>
                     <th scope="row">{{p.position}}</th>
@@ -81,7 +81,7 @@
                   </tr>
                   {% endif %}
                   {% endfor %}
-                  {% for p in user_players %}
+                  {% for p in user.players.all %}
                   {% if p.position == "TE" %}
                   <tr>
                     <th scope="row">{{p.position}}</th>
