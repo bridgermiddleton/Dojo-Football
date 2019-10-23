@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title></title>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="jumbotron text-center">
+            <h1 class="display-4">Welcome to the Draft</h1>
+            <p class="lead">Your Starting Lineup Needs: 1 QB, 2 RBs, 3WRs, and 1 TE. Good Luck and Enjoy!</p>
+        </div>
+        <div class="row">
+            <div class="col">
+                <table class="table table-bordered text-center">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>Quarterbacks</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                            {% for p in all_players %}
+                            {% if p.position == "QB" %}
+                            <tr>
+                            <td>
+                                <form action="/draftplayer" method="POST">
+                                    {% csrf_token %}
+                                    {{p}}<input type="hidden" name="player" value={{p.gsis_id}}>
+                                    <input class="btn btn-link" type="submit" value="Add Player">
+
+                                </form>
+                            </td>
+                            </tr>
+                            {% endif %}
+                            {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="col">
+                <table class="table table-bordered text-center">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>Runningbacks</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                            {% for p in all_players %}
+                            {% if p.position == "RB" %}
+                            <tr>
+                            <td>
+                               <form action="/draftplayer" method="POST">
+                                    {% csrf_token %}
+                                    {{p}}<input type="hidden" name="player" value={{p.gsis_id}}>
+                                    <input class="btn btn-link" type="submit" value="Add Player">
+
+                                </form>
+                            </td>
+                            </tr>
+                            {% endif %}
+                            {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="col">
+                <table class="table table-bordered text-center">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>Wide Receivers</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                            {% for p in all_players %}
+                            {% if p.position == "WR" %}
+                            <tr>
+                            <td>
+                                <form action="/draftplayer" method="POST">
+                                    {% csrf_token %}
+                                    {{p}}<input type="hidden" name="player" value={{p.gsis_id}}>
+                                    <input class="btn btn-link" type="submit" value="Add Player">
+
+                                </form>
+                            </td>
+                            </tr>
+                            {% endif %}
+                            {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="col">
+                <table class="table table-bordered text-center">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>Tight Ends</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                            {% for p in all_players %}
+                            {% if p.position == "TE" %}
+                            <tr>
+                            <td>
+                                <form action="/draftplayer" method="POST">
+                                    {% csrf_token %}
+                                    {{p}}<input type="hidden" name="player" value={{p.gsis_id}}>
+                                    <input class="btn btn-link" type="submit" value="Add Player">
+
+                                </form>
+                            </td>
+                            </tr>
+                            {% endif %}
+                            {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+</div>
+</body>
+</html>

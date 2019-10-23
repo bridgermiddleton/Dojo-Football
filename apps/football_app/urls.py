@@ -7,5 +7,8 @@ urlpatterns = [
     url(r'^login$', views.login),
     url(r'^register$', views.register),
     url(r'^home$', views.home),
+    url(r'^draftpage$', views.draftpage),
+    url(r'^matchup$', views.matchup),
+    url(r'^logout$', views.logout)
 
 ]
