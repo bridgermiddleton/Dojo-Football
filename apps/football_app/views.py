@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 import bcrypt
 import nflgame
-from .models import User, Player, TWeek
+from .models import User, Player, TWeek, PWeek
 
 def loginpage(request):
     return render(request, "football_app/loginpage.html")
@@ -89,40 +89,72 @@ def userteamhome(request):
     return render(request, "football_app/userteamhome.html", context)
 
 
-def individualplayerpage(request, playerid):
+def individualplayerpage(request, playerid, week):
+    weeknumber = int(week)
     context = {
         "player": Player.objects.get(id=playerid),
+        "pweek": PWeek.objects.get(player=Player.objects.get(id=playerid),week=weeknumber),
+        "week": weeknumber
+
     }
     return render(request, "football_app/individualplayerpage.html", context)
 
 
-def getplayerstats(request, playerid):
+def getplayerstats(request, playerid, week):
     theplayer = Player.objects.get(id=playerid)
+    weeknumber = int(week)
+
     for key in nflgame.players:
         if nflgame.players[key].gsis_id == theplayer.gsis_id:
-            stats = nflgame.players[key].stats(2019, week=7).stats
-            if 'passing_yds' in stats:
-                 theplayer.passing_yards = stats['passing_yds']
-                 theplayer.save()
-            if 'rushing_yds' in stats:
-                theplayer.rushing_yards = stats['rushing_yds']
-                theplayer.save()
-            if 'receiving_yds' in stats:
-                theplayer.receiving_yards = stats['receiving_yds']
-                theplayer.save()
-            if 'passing_tds' in stats:
-                theplayer.passing_tds = stats['passing_tds']
-                theplayer.save()
-            if 'rushing_tds' in stats:
-                theplayer.rushing_tds = stats['rushing_tds']
-                theplayer.save()
-            if 'receiving_tds' in stats:
-                theplayer.rushing_tds = stats['receiving_tds']
-                theplayer.save()
-            if 'receiving_rec' in stats:
-                theplayer.receptions = stats['receiving_rec']
-                theplayer.save()
-    
+            stats = nflgame.players[key].stats(2019, week=weeknumber).stats
+            pweek = PWeek.objects.filter(player=Player.objects.get(id=playerid), week=weeknumber)
+            if pweek:
+                return redirect(f"/individualplayerpage/{playerid}/{week}")
+            else:
+                if 'passing_yds' in stats:
+                    passing_yards = stats['passing_yds']
+                else:
+                    passing_yards = 0
+
+                if 'rushing_yds' in stats:
+                    rushing_yards = stats['rushing_yds']
+                else:
+                    rushing_yards = 0
+                    
+                if 'receiving_yds' in stats:
+                    receiving_yards = stats['receiving_yds']
+                else:
+                    receiving_yards = 0
+                    
+                if 'passing_tds' in stats:
+                    passing_tds = stats['passing_tds']
+                else:
+                    passing_tds = 0
+                    
+                if 'rushing_tds' in stats:
+                    rushing_tds = stats['rushing_tds']
+                else:
+                    rushing_tds = 0
+                if 'receiving_tds' in stats:
+                    receiving_tds = stats['receiving_tds']
+                else:
+                    receiving_tds = 0
+                    
+                if 'receiving_rec' in stats:
+                    receptions = stats['receiving_rec']
+                else:
+                    receptions = 0
         
-    
-    return redirect(f"/individualplayerpage/{playerid}")
+                PWeek.objects.create(points=0,passing_yards=passing_yards,rushing_yards=rushing_yards,receiving_yards=receiving_yards,passing_tds=passing_tds,rushing_tds=rushing_tds,receiving_tds=receiving_tds,receptions=receptions,player=Player.objects.get(id=playerid),week=weeknumber)
+
+                return redirect(f"/individualplayerpage/{playerid}/{week}")
+
+
+
+def eachweekstats(request, week, playerid):
+    weeknumber = int(week)
+    context = {
+        "player": playerid,
+        "pweek": PWeek.objects.get(player=Player.objects.get(id=playerid),week=weeknumber)
+    }
+    return render(request, "football_app/eachweekstats.html", context)

@@ -42,8 +42,9 @@
         <p class="lead">This is your main team page. Below is your roster.</p>
     </div>
     <div class="container">
-        <table class="table table-bordered">
-            <thead>
+        {% if user.players.exists %}
+        <table class="table table-bordered" style="width: 30%; margin: 0px auto;">
+            <thead class="thead-dark">
                 <tr>
                     <th>Position</th>
                     <th>Players</th>
@@ -53,9 +54,9 @@
             <tbody>
                 {% for player in user.players.all %}
                 <tr>
-                    <td>{{player.position}}</td>
+                    <td class="font-weight-bold">{{player.position}}</td>
                     <td>
-                        <form action="/getplayerstats/{{player.id}}" method="POST">
+                        <form action="/getplayerstats/{{player.id}}/{{week}}" method="POST">
                             {% csrf_token %}
                             <input class="btn btn-link" type="submit" value="{{player.first_name}} {{player.last_name}}">
                         </form>
@@ -65,7 +66,7 @@
 
             </tbody>
         </table>
-
+        {% endif %}
 
     </div>
 </body>

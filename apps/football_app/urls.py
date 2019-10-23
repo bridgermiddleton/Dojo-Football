@@ -11,7 +11,8 @@ urlpatterns = [
     url(r'^draftplayer$', views.draftplayer),
     url(r'^reset$', views.reset),
     url(r'^userteamhome$', views.userteamhome),
-    url(r'^individualplayerpage/(?P<playerid>\d+)$', views.individualplayerpage),
-    url(r'^getplayerstats/(?P<playerid>\d+)$', views.getplayerstats)
+    url(r'^individualplayerpage/(?P<playerid>\d+)/(?P<week>\d+)$', views.individualplayerpage),
+    url(r'^getplayerstats/(?P<playerid>\d+)/(?P<week>\d+)$', views.getplayerstats),
+    url(r'^week/(?P<week>\d+)/(?P<playerid>\d+)$', views.eachweekstats)
 
 ]
