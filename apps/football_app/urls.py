@@ -9,6 +9,8 @@ urlpatterns = [
     url(r'^home$', views.home),
     url(r'^draftpage$', views.draftpage),
     url(r'^matchup$', views.matchup),
-    url(r'^logout$', views.logout)
+    url(r'^logout$', views.logout),
+    url(r'^home/(?P<val>[1-8]{1})$', views.homeWeek),
+    url(r'^draftplayer$', views.draftplayer)
 
 ]

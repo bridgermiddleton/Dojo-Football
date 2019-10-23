@@ -40,15 +40,27 @@ def filterStatus(theplayer):
 
 def home(request):
     teams = User.objects.order_by("W")
+    weeks = User.objects.order_by("id")
+    theweek=         {
+        'week1' : [weeks[4],weeks[2],weeks[8],weeks[5],weeks[6],weeks[1],weeks[7],weeks[3],weeks[0],weeks[9]],
+        'week2' : [weeks[4],weeks[5],weeks[8],weeks[9],weeks[1],weeks[2],weeks[6],weeks[3],weeks[7],weeks[0]],
+        'week3' : [weeks[4],weeks[8],weeks[1],weeks[5],weeks[3],weeks[2],weeks[6],weeks[0],weeks[7],weeks[9]],
+        'week4' : [weeks[4],weeks[9],weeks[3],weeks[5],weeks[1],weeks[8],weeks[0],weeks[2],weeks[6],weeks[7]],
+        'week5' : [weeks[4],weeks[1],weeks[0],weeks[5],weeks[3],weeks[8],weeks[7],weeks[2],weeks[6],weeks[9]],
+        'week6' : [weeks[4],weeks[3],weeks[7],weeks[5],weeks[0],weeks[8],weeks[1],weeks[9],weeks[6],weeks[2]],
+        'week7' : [weeks[4],weeks[0],weeks[6],weeks[5],weeks[7],weeks[8],weeks[3],weeks[1],weeks[9],weeks[2]],
+        'week8' : [weeks[4],weeks[7],weeks[6],weeks[8],weeks[0],weeks[1],weeks[2],weeks[5],weeks[3],weeks[9]],
+    }
+    print(weeks[0])
     context = {
         'teams' : teams,
         'length' : range(1,len(teams)+1),
         'superlength' : len(teams),
+        'weeks' : theweek['week1']
     }
     return render(request, "football_app/user_home.html", context)
 def draftpage(request):
     if 'userid' in request.session:
-
         all_players = list(nflgame.players.values())
         active_players = list(filter(filterStatus, all_players))
         all_player_classes = Player.objects.all()
@@ -69,3 +81,37 @@ def draftpage(request):
         return redirect("/")
 def matchup(request):
     return render(request, "football_app/matchup_page.html")
+def homeWeek(request, val):
+    teams = User.objects.order_by("W")
+    weeks = User.objects.order_by("id")
+    weekDisplay = 'Week '+str(val)
+    theweek=         {
+        'week1' : [weeks[4],weeks[2],weeks[8],weeks[5],weeks[6],weeks[1],weeks[7],weeks[3],weeks[0],weeks[9]],
+        'week2' : [weeks[4],weeks[5],weeks[8],weeks[9],weeks[1],weeks[2],weeks[6],weeks[3],weeks[7],weeks[0]],
+        'week3' : [weeks[4],weeks[8],weeks[1],weeks[5],weeks[3],weeks[2],weeks[6],weeks[0],weeks[7],weeks[9]],
+        'week4' : [weeks[4],weeks[9],weeks[3],weeks[5],weeks[1],weeks[8],weeks[0],weeks[2],weeks[6],weeks[7]],
+        'week5' : [weeks[4],weeks[1],weeks[0],weeks[5],weeks[3],weeks[8],weeks[7],weeks[2],weeks[6],weeks[9]],
+        'week6' : [weeks[4],weeks[3],weeks[7],weeks[5],weeks[0],weeks[8],weeks[1],weeks[9],weeks[6],weeks[2]],
+        'week7' : [weeks[4],weeks[0],weeks[6],weeks[5],weeks[7],weeks[8],weeks[3],weeks[1],weeks[9],weeks[2]],
+        'week8' : [weeks[4],weeks[7],weeks[6],weeks[8],weeks[0],weeks[1],weeks[2],weeks[5],weeks[3],weeks[9]],
+    }
+    val='week'+str(val)
+    thisWeek = theweek[val]
+    context = {
+        'teams' : teams,
+        'length' : range(1,len(teams)+1),
+        'superlength' : len(teams),
+        'weeks' : thisWeek,
+        'weekDisplay' : weekDisplay
+    }
+    return render(request, "football_app/user_home.html", context)
+def draftplayer(request):
+    all_players = list(nflgame.players.values())
+    active_players = list(filter(filterStatus, all_players))
+    user = User.objects.get(id=request.session['userid'])
+    for a in active_players:
+        if a.gsis_id == request.POST['player']:
+            thisP = a
+    newPlayer = Player.objects.create(first_name = thisP.first_name, last_name = thisP.last_name, gsis_id =thisP.gsis_id, position = thisP.position, total_points=0, passing_yards=0, rushing_yards=0, receiving_yards=0, passing_tds=0, rushing_tds=0, receiving_tds=0, receptions=0, user=user)
+    print(newPlayer)
+    return redirect("/draftpage")
