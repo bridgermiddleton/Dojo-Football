@@ -58,6 +58,7 @@ class Player(models.Model):
 
 
 class TWeek(models.Model):
+    week = models.IntegerField()
     total_score = models.DecimalField(max_digits=5, decimal_places=2)
     W = models.BooleanField()
     QB_score = models.DecimalField(max_digits=5, decimal_places=2)
