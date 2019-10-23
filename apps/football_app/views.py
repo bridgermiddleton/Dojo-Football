@@ -34,6 +34,9 @@ def logout(request):
        del request.session['userid']
    return redirect("/")
 # Create your views here.
+def teamHome(request):
+    return render(request, "football_app/teamHome.html")
+
 def filterStatus(theplayer):
     if theplayer.status == "ACT":
         return True

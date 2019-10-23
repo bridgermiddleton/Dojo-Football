@@ -7,6 +7,7 @@ urlpatterns = [
     url(r'^login$', views.login),
     url(r'^register$', views.register),
     url(r'^draftpage$', views.draftpage),
-    url(r'^draftplayer$', views.draftplayer)
+    url(r'^draftplayer$', views.draftplayer),
+    url(r'^teamHome$', views.teamHome)
 
 ]
