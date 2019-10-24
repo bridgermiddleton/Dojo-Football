@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 import bcrypt
-from .models import *
 import nflgame
+from .models import User, Player, TWeek
 
 def loginpage(request):
     return render(request, "football_app/loginpage.html")
@@ -17,6 +17,8 @@ def login(request):
         if bcrypt.checkpw(request.POST['password'].encode(), logged_user.password.encode()):
             request.session['userid'] = logged_user.id
             redirect('/home')
+        else:
+            return redirect("/")
     else:
         return redirect("/")
 
@@ -27,10 +29,14 @@ def register(request):
     request.session['userid'] = user.id
     return redirect('/home')
 
+
 def logout(request):
    if 'userid' in request.session:
        del request.session['userid']
    return redirect("/")
+
+def teamHome(request):
+    return render(request, "football_app/teamHome.html")
 
 def filterStatus(theplayer):
     if theplayer.status == "ACT":
@@ -61,6 +67,7 @@ def home(request):
     return render(request, "football_app/user_home.html", context)
 def draftpage(request):
     if 'userid' in request.session:
+
         all_players = list(nflgame.players.values())
         active_players = list(filter(filterStatus, all_players))
         all_player_classes = Player.objects.all()
@@ -115,3 +122,4 @@ def draftplayer(request):
     newPlayer = Player.objects.create(first_name = thisP.first_name, last_name = thisP.last_name, gsis_id =thisP.gsis_id, position = thisP.position, total_points=0, passing_yards=0, rushing_yards=0, receiving_yards=0, passing_tds=0, rushing_tds=0, receiving_tds=0, receptions=0, user=user)
     print(newPlayer)
     return redirect("/draftpage")
+
