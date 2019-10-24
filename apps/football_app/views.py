@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 import bcrypt
 import nflgame
 from .models import User, Player, TWeek
+from .utils import *
 
 def loginpage(request):
     return render(request, "football_app/loginpage.html")
@@ -33,38 +34,54 @@ def logout(request):
    if 'userid' in request.session:
        del request.session['userid']
    return redirect("/")
-# Create your views here.
+
+
 def teamHome(request):
-    return render(request, "football_app/teamHome.html")
+    current_user = User.objects.get(id=request.session["userid"])
+    roster = current_user.players.all() #list of player objects
+    for p in roster:
+        p.total_points = score(p.gsis_id, week=2)
+
+    context = {
+        "user": current_user,
+        "roster": roster
+    }
+    return render(request, "football_app/teamHome.html", context)
 
 def filterStatus(theplayer):
     if theplayer.status == "ACT":
         return True
     else:
         return False
+
 def draftpage(request):
     if 'userid' in request.session:
+        print("#"*80)
+        current_user = User.objects.get(id=request.session['userid'])
+        roster = Player.objects.filter(user=current_user)
+        if len(roster)<7:
+            all_players = list(nflgame.players.values())
+            active_players = list(filter(filterStatus, all_players))
+            all_player_classes = Player.objects.all()
+            available_players = []
+            for player in active_players:
+                taken = False
+                for taken_player in all_player_classes:
+                    if player.gsis_id == taken_player.gsis_id:
+                        taken = True
+                        break
+                if taken == False:
+                    available_players.append(player)
 
-        all_players = list(nflgame.players.values())
-        active_players = list(filter(filterStatus, all_players))
-        all_player_classes = Player.objects.all()
-        available_players = []
-        for player in active_players:
-            taken = False
-            for taken_player in all_player_classes:
-                if player.gsis_id == taken_player.gsis_id:
-                    taken = True
-                    break
-            if taken == False:
-                available_players.append(player)
+                
 
-            
+            context = {
+                "all_players": available_players,
+            }
 
-        context = {
-            "all_players": available_players,
-        }
-
-        return render(request, "football_app/draftpage.html", context)
+            return render(request, "football_app/draftpage.html", context)
+        else: 
+            return redirect("/teamHome")
     else:
         return redirect("/")
 def draftplayer(request):
