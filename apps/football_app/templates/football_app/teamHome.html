@@ -89,7 +89,7 @@
                   <tr>
                     <th scope="row">{{p.position}}</th>
                     <td>
-                      <a href="/week/{{week.week}}/{{p.id}}">{{p.first_name}} {{p.last_name}}</a>
+                      <a href="/week/{{week}}/{{p.id}}">{{p.first_name}} {{p.last_name}}</a>
                     </td>
                     
                     {% for pweek in p.weeks.all %}
@@ -105,7 +105,7 @@
                   <tr>
                     <th scope="row">{{p.position}}</th>
                     <td>
-                      <a href="/week/{{week.week}}/{{p.id}}">{{p.first_name}} {{p.last_name}}</a>
+                      <a href="/week/{{week}}/{{p.id}}">{{p.first_name}} {{p.last_name}}</a>
                     </td>
                     
                     {% for pweek in p.weeks.all %}
