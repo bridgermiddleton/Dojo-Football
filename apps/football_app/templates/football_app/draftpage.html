@@ -11,31 +11,36 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="#">Dojo Football</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-            <li class="nav-item active">
-                <a class="nav-link" href="#">My Team <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item active">
-                <a class="nav-link" href="#">Matchup</a>
-            <li class="nav-item">
-                <a class="nav-link disabled" href="#">Draft</a>
-            </li>
-            <li class="nav-item">
-            <u><a href="/logout" class="nav-link text-primary">Log Out</a></u>
-            </li>
-            </ul>
-        </div>
-    </nav>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+                <a class="navbar-brand" href="#">Dojo Football</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                  <ul class="navbar-nav">
+                    <li class="nav-item active">
+                      <a class="nav-link" href="/teamHome">My Team<span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="/draftpage">Draft</a>
+                    </li>
+                    <li class="nav-item">
+                      <form action="/logout" method="POST">
+                        {% csrf_token %}
+                            <input class="btn btn-link" type="submit" value="Log Out">
+                        </form>
+                    </li>
+                  </ul>
+                </div>
+              </nav>
     <div class="container">
         <div class="jumbotron text-center">
             <h1 class="display-4">Welcome to the Draft</h1>
             <p class="lead">Your Starting Lineup Needs: 1 QB, 2 RBs, 3WRs, and 1 TE. Good Luck and Enjoy!</p>
+            <form action="/reset" method="POST">
+                {% csrf_token %}
+                <input class="btn btn-danger" type="submit" value="Reset">
+            </form>
         </div>
         <div class="row">
             <div class="col">
@@ -53,7 +58,11 @@
                                 <form action="/draftplayer" method="POST">
                                     {% csrf_token %}
                                     {{p}}<input type="hidden" name="player" value={{p.gsis_id}}>
+                                    {% if MaxQB == True %}
+                                    <p class="mt-1 font-italic">QB max reached</p>
+                                    {%else%}
                                     <input class="btn btn-link" type="submit" value="Add Player">
+                                    {% endif %}
 
                                 </form>
                             </td>
@@ -78,7 +87,11 @@
                                <form action="/draftplayer" method="POST">
                                     {% csrf_token %}
                                     {{p}}<input type="hidden" name="player" value={{p.gsis_id}}>
+                                    {% if MaxRB == True %}
+                                    <p class="mt-1 font-italic">RB max reached</p>
+                                    {%else%}
                                     <input class="btn btn-link" type="submit" value="Add Player">
+                                    {% endif %}
 
                                 </form>
                             </td>
@@ -103,7 +116,12 @@
                                 <form action="/draftplayer" method="POST">
                                     {% csrf_token %}
                                     {{p}}<input type="hidden" name="player" value={{p.gsis_id}}>
+                                    {% if MaxWR == True %}
+                                    <p class="mt-1 font-italic">WR max reached</p>
+                                    {%else%}
                                     <input class="btn btn-link" type="submit" value="Add Player">
+                                    {% endif %}
+
 
                                 </form>
                             </td>
@@ -128,7 +146,11 @@
                                 <form action="/draftplayer" method="POST">
                                     {% csrf_token %}
                                     {{p}}<input type="hidden" name="player" value={{p.gsis_id}}>
+                                    {% if MaxTE == True %}
+                                    <p class="mt-1 font-italic">TE max reached</p>
+                                    {%else%}
                                     <input class="btn btn-link" type="submit" value="Add Player">
+                                    {% endif %}
 
                                 </form>
                             </td>

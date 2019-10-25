@@ -12,17 +12,18 @@
 </head>
 <body style="padding-bottom: 40px;">
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-          <a class="navbar-brand" href="#">Dojo Football</a>
+          <a class="navbar-brand" href="/home">Dojo Football</a>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
               <li class="nav-item active">
-                <a class="nav-link" href="#">My Team <span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="/teamHome">My Team <span class="sr-only">(current)</span></a>
               </li>
-              <li class="nav-item active">
-                <a class="nav-link" href="#">Matchup</a>
+              <li class="nav-item">
+                <a class="nav-link" href="/leagueRosters">League Rosters</a>
+              </li>
               <li class="nav-item">
                 <a class="nav-link" href="/draftpage">Draft</a>
               </li>
@@ -33,20 +34,20 @@
           </div>
         </nav>
         <div class="container">
-            <h2>Matchup:</h2>
-            <h4>{{user.team_name}}:</h4>
-            <p>Score</p>
-            <h4>Opponent Team Name:</h4>
-            <p>Score</p>
-        </div>
+            <form action="/reset" method="POST">
+              {% csrf_token %}
+              <input class="btn btn-danger float-right" style="margin-top: 10px;" type="submit" value="Reset">
+            </form>
         <div class="container">
+
+          
           <h2>{{user.team_name}} Roster:</h2>
+          <p>Week: {{week}}</p>
             <table class="table table-striped">
                 <thead class="bg-dark text-light">
                   <tr>
                     <th scope="col">Slot</th>
                     <th scope="col">Player</th>
-                    <th scope="col">Opp</th>
                     <th scope="col">Points</th>
                   </tr>
                 </thead>
@@ -55,9 +56,15 @@
                   {% if p.position == "QB" %}
                   <tr>
                     <th scope="row">{{p.position}}</th>
-                    <td>{{p.first_name}} {{p.last_name}}</td>
-                    <td>Opponent we dont have this in Player class</td>
-                    <td>{{p.total_points}}</td>
+                    <td>
+                      <a href="/week/{{week}}/{{p.id}}">{{p.first_name}} {{p.last_name}}</a>
+                    </td>
+                    
+                    {% for pweek in p.weeks.all %}
+                    {% if pweek.week == week %}
+                    <td>{{pweek.points}}</td>
+                    {% endif %}
+                    {% endfor %}
                   </tr>
                   {% endif %}
                   {% endfor %}
@@ -65,9 +72,15 @@
                   {% if p.position == "RB" %}
                   <tr>
                     <th scope="row">{{p.position}}</th>
-                    <td>{{p.first_name}} {{p.last_name}}</td>
-                    <td>Opponent we dont have this in Player class</td>
-                    <td>{{p.total_points}}</td>
+                    <td>
+                      <a href="/week/{{week}}/{{p.id}}">{{p.first_name}} {{p.last_name}}</a>
+                    </td>
+                    
+                    {% for pweek in p.weeks.all %}
+                    {% if pweek.week == week %}
+                    <td>{{pweek.points}}</td>
+                    {% endif %}
+                    {% endfor %}
                   </tr>
                   {% endif %}
                   {% endfor %}
@@ -75,9 +88,15 @@
                   {% if p.position == "WR" %}
                   <tr>
                     <th scope="row">{{p.position}}</th>
-                    <td>{{p.first_name}} {{p.last_name}}</td>
-                    <td>Opponent we dont have this in Player class</td>
-                    <td>{{p.total_points}}</td>
+                    <td>
+                      <a href="/week/{{week.week}}/{{p.id}}">{{p.first_name}} {{p.last_name}}</a>
+                    </td>
+                    
+                    {% for pweek in p.weeks.all %}
+                    {% if pweek.week == week %}
+                    <td>{{pweek.points}}</td>
+                    {% endif %}
+                    {% endfor %}
                   </tr>
                   {% endif %}
                   {% endfor %}
@@ -85,9 +104,15 @@
                   {% if p.position == "TE" %}
                   <tr>
                     <th scope="row">{{p.position}}</th>
-                    <td>{{p.first_name}} {{p.last_name}}</td>
-                    <td>Opponent we dont have this in Player class</td>
-                    <td>{{p.total_points}}</td>
+                    <td>
+                      <a href="/week/{{week.week}}/{{p.id}}">{{p.first_name}} {{p.last_name}}</a>
+                    </td>
+                    
+                    {% for pweek in p.weeks.all %}
+                    {% if pweek.week == week %}
+                    <td>{{pweek.points}}</td>
+                    {% endif %}
+                    {% endfor %}
                   </tr>
                   {% endif %}
                   {% endfor %}
@@ -103,7 +128,7 @@
                         <th scope="col"></th>
                         <th scope="col"></th>
                         <th scope="col"></th>
-                        <th scope="col-1">120.08</th>
+                        <th scope="col-1">{{new_total_score}}</th>
                     </tr>
                 </thead>
             </table>
